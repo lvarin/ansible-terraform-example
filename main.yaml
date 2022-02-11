@@ -1,0 +1,35 @@
+---
+- hosts: localhost
+  vars:
+    state: present
+  tasks:
+  - terraform:
+      force_init: true
+      project_path: terraform/
+      state: "{{ state }}"
+
+- hosts: web
+  become: yes
+  become_user: root
+  vars:
+    helloworld: Meow!
+  tasks:
+  - meta: refresh_inventory
+  - name: Install firewalld
+    yum:
+      name: firewalld
+  - name: Stop firewalld
+    service:
+      name: firewalld
+      state: stopped
+  - name: Install the httpd package
+    yum:
+      name: httpd
+  - name: Start the httpd service
+    service:
+      name: httpd
+      state: started
+  - name: Configure Cat App
+    template:
+      src: files/index.j2
+      dest: /var/www/html/index.html
