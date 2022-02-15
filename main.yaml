@@ -1,13 +1,4 @@
 ---
-- hosts: localhost
-  vars:
-    state: present
-  tasks:
-  - terraform:
-      force_init: true
-      project_path: terraform/
-      state: "{{ state }}"
-
 - hosts: web
   become: yes
   become_user: root

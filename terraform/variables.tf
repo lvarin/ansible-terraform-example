@@ -1,12 +1,12 @@
 # Variables
 variable "keypair" {
   type    = string
-  default = "XXXX"   # name of keypair that will have access to the VM 
+  default = "alvaro-key"   # name of keypair that will have access to the VM
 }
 
 variable "network" {
   type    = string
-  default = "XXXX" # default network to be used
+  default = "project_2001316" # default network to be used
 }
 
 variable "security_groups" {
@@ -23,7 +23,7 @@ data "openstack_images_image_v2" "image" {
 
 variable "private_key_path" {
   description = "Path to the private SSH key, used to access the instance."
-  default     = "XXXX"
+  default     = "~/.ssh/alvaro-key.pem" # path where terraform will find the private key
 }
 
 variable "ssh_user" {
