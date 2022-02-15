@@ -18,6 +18,7 @@ terraform -chdir=terraform init
 
 ```sh
 terraform -chdir=terraform plan -out=Test
+```
 
 ```sh
 terraform -chdir=terraform apply "Test"
