@@ -10,7 +10,7 @@ This is a small example of Terraform and Ansible working together. Terraform wil
 
 * Edit `terraform/variables.tf` with the correct values for the name of **keypair** (`openstack keypair list`), **network** (`openstack network list`) and **security_groups** (`openstack security group list`).
 
-* Run terraform. First `init`, then `plan`, finaly `apply`.
+* Run terraform. First `init`, then `plan`, finally `apply`.
 
 ```sh
 terraform -chdir=terraform init
@@ -34,7 +34,7 @@ ansible-playbook main.yaml
 
 ![Cat](./cat-rainbow.png)
 
-# Destroy the infrastruture
+# Destroy the infrastructure
 
 ```sh
 terraform -chdir=terraform destroy
