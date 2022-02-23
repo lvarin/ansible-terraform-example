@@ -9,11 +9,6 @@ variable "network" {
   default = "project_2001316" # default network to be used
 }
 
-variable "security_groups" {
-  type    = list(string)
-  default = ["SSH-World", "Allow-HTTP(s)"]  # Name of default security group
-}
-
 # Data sources
 ## Get Image ID
 data "openstack_images_image_v2" "image" {
