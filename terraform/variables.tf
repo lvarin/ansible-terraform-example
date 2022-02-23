@@ -1,4 +1,9 @@
 # Variables
+variable "instance_name" {
+  type = string
+  default = "Terraform-test-test" # Name of the VM to create
+}
+
 variable "keypair" {
   type    = string
   default = "alvaro-key"   # name of keypair that will have access to the VM

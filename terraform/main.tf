@@ -17,7 +17,7 @@ resource "openstack_compute_secgroup_v2" "secgroup_1" {
 
 # Create an instance
 resource "openstack_compute_instance_v2" "server" {
-  name            = "Terraform-test-XXXX"  #Instance name
+  name            = var.instance_name
   image_id        = data.openstack_images_image_v2.image.id
   flavor_id       = data.openstack_compute_flavor_v2.flavor.id
   key_pair        = var.keypair
