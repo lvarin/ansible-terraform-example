@@ -8,23 +8,9 @@ This is a small example of Terraform and Ansible working together. Terraform wil
 
 * Log in Openstack sourcing the openrc file that your Openstack instance provides.
 
-* Edit `terraform/variables.tf` with the correct values for the name of **keypair** (`openstack keypair list`), **network** (`openstack network list`) and **security_groups** (`openstack security group list`).
+* Edit `terraform/variables.tf` with the correct values for the name of **keypair** (`openstack keypair list`), **network** (`openstack network list`).
 
-* Run terraform. First `init`, then `plan`, finally `apply`.
-
-```sh
-terraform -chdir=terraform init
-```
-
-```sh
-terraform -chdir=terraform plan -out=Test
-```
-
-```sh
-terraform -chdir=terraform apply "Test"
-```
-
-* Run Ansible
+* Run ansible:
 
 ```sh
 ansible-playbook main.yaml
