@@ -1,4 +1,9 @@
 ---
+- name: Run Terraform and build inventory
+  hosts: localhost
+  roles:
+  - terraform
+
 - hosts: web
   become: yes
   become_user: root

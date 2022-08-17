@@ -1,0 +1,20 @@
+---
+- name: Run Terraform
+  terraform:
+    project_path: "{{ playbook_dir }}/terraform"
+    state: present
+    workspace: default
+  register: tf_results
+
+# Now iterate over the list returned by Terraform and build
+# the inventory accordingly.
+- name: Add entries to inventory
+  add_host:
+    name: "{{ item.name }}"
+    ansible_ssh_host: "{{ item.ip }}"
+    ansible_ssh_user: "{{item.ansible_ssh_user}}"
+    ansible_ssh_private_key_file: "{{item.private_key_file}}"
+    host_key_checking: no
+    groups: "{{ item.groups }}"
+    ansible_ssh_common_args: "{{item.ssh_args}}"
+  loop: "{{ tf_results.outputs.inventory.value }}"

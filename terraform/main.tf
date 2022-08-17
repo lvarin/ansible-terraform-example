@@ -62,20 +62,20 @@ resource "openstack_compute_floatingip_associate_v2" "fip1" {
     }
   }
 
-  #provisioner "local-exec" {
-  #  command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${openstack_networking_floatingip_v2.fip1.address},' -u ${var.ssh_user} --private-key ${var.private_key_path} ansible/httpd.yml"
-  #}
 }
 
-resource "local_file" "ansible_inventory" {
-  content = templatefile("inventory.tmpl",
-    {
-     ip = openstack_networking_floatingip_v2.fip1.address,
-    }
-  )
-  filename = "../hosts"
-}
 
 output "server_floating_ip" {
  value = openstack_networking_floatingip_v2.fip1.address
+}
+
+output "inventory" {
+  value = [ {
+        "groups"           : "['web']",
+        "name"             : "${openstack_compute_instance_v2.server.name}",
+        "ip"               : "${openstack_networking_floatingip_v2.fip1.address}",
+        "ansible_ssh_user" : "${var.ssh_user}",
+        "private_key_file" : "${var.private_key_path}",
+        "ssh_args"         : "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+      } ]
 }
