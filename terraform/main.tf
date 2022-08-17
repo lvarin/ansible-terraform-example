@@ -4,7 +4,7 @@ data "openstack_compute_flavor_v2" "flavor" {
 }
 
 resource "openstack_compute_secgroup_v2" "secgroup_ssh" {
-  name = "SSH"
+  name = "SSH_web"
   description = "my security group"
 
   rule {
@@ -15,9 +15,8 @@ resource "openstack_compute_secgroup_v2" "secgroup_ssh" {
   }
 }
 
-
 resource "openstack_compute_secgroup_v2" "secgroup_http" {
-  name = "HTTP"
+  name = "HTTP_web"
   description = "my security group"
 
   rule {
@@ -35,8 +34,8 @@ resource "openstack_compute_instance_v2" "server" {
   image_id        = data.openstack_images_image_v2.image.id
   flavor_id       = data.openstack_compute_flavor_v2.flavor.id
   key_pair        = var.keypair
-  security_groups = ["${openstack_compute_secgroup_v2.secgroup_ssh.name}",
-                     "${openstack_compute_secgroup_v2.secgroup_http.name}"]
+  security_groups = ["${openstack_compute_secgroup_v2.secgroup_ssh.id}",
+                     "${openstack_compute_secgroup_v2.secgroup_http.id}"]
   network {
     name = var.network
   }
