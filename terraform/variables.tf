@@ -23,7 +23,7 @@ data "openstack_images_image_v2" "image" {
 
 variable "private_key_path" {
   description = "Path to the private SSH key, used to access the instance."
-  default     = "~/.ssh/alvaro-key.pem" # path where terraform will find the private key
+  default     = "~/.ssh/alvaro-key" # path where terraform will find the private key
 }
 
 variable "ssh_user" {
