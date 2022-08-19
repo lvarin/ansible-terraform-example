@@ -43,12 +43,12 @@ resource "openstack_compute_instance_v2" "server" {
 
 # Add Floating ip
 
-resource "openstack_networking_floatingip_v2" "fip1" {
-  pool = "public"
+data "openstack_networking_floatingip_v2" "fip1" {
+  address = "86.50.228.20"
 }
 
 resource "openstack_compute_floatingip_associate_v2" "fip1" {
-  floating_ip = openstack_networking_floatingip_v2.fip1.address
+  floating_ip = data.openstack_networking_floatingip_v2.fip1.address
   instance_id = openstack_compute_instance_v2.server.id
 
   provisioner "remote-exec" {
@@ -57,7 +57,7 @@ resource "openstack_compute_floatingip_associate_v2" "fip1" {
     connection {
       type        = "ssh"
       user        = "${var.ssh_user}"
-      host        = "${openstack_networking_floatingip_v2.fip1.address}"
+      host        = "${data.openstack_networking_floatingip_v2.fip1.address}"
       private_key = "${file("${var.private_key_path}")}"
     }
   }
@@ -66,14 +66,14 @@ resource "openstack_compute_floatingip_associate_v2" "fip1" {
 
 
 output "server_floating_ip" {
- value = openstack_networking_floatingip_v2.fip1.address
+ value = data.openstack_networking_floatingip_v2.fip1.address
 }
 
 output "inventory" {
   value = [ {
         "groups"           : "['web']",
         "name"             : "${openstack_compute_instance_v2.server.name}",
-        "ip"               : "${openstack_networking_floatingip_v2.fip1.address}",
+        "ip"               : "${data.openstack_networking_floatingip_v2.fip1.address}",
         "ansible_ssh_user" : "${var.ssh_user}",
         "private_key_file" : "${var.private_key_path}",
         "ssh_args"         : "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
